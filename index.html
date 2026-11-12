@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CMF TEAM 대시보드 | Freight Quotation</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="brand-mark">CMF</div>
+      <div>
+        <div class="brand-name">CMF TEAM 대시보드</div>
+        <div class="brand-sub">Freight Quotation · Phase 1</div>
+      </div>
+    </div>
+    <nav id="nav">
+      <div class="nav-group">견적</div>
+      <a data-view="dashboard">Dashboard</a>
+      <a data-view="quote">New Quotation</a>
+      <a data-view="compare">Carrier Comparison</a>
+      <a data-view="breakdown">Cost Breakdown</a>
+      <a data-view="history">Quotation History</a>
+      <div class="nav-group">데이터</div>
+      <a data-view="rates">Rate Database</a>
+      <a data-view="remarks">Remark Management</a>
+      <a data-view="upload">데이터 업로드</a>
+      <a data-view="settings">Settings</a>
+    </nav>
+    <div class="side-foot" id="dataBadge"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div id="modal" class="modal hidden"><div class="modal-box" id="modalBox"></div></div>
+<div id="toast" class="toast hidden"></div>
+
+<script src="js/normalize.js"></script>
+<script src="js/schema.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/xlsx-lite.js"></script>
+<script src="js/excel-builders.js"></script>
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

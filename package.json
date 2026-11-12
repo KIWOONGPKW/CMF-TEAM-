@@ -1,0 +1,11 @@
+{
+  "name": "cmf-team-dashboard",
+  "displayName": "CMF TEAM 대시보드",
+  "version": "1.0.0",
+  "description": "CMF TEAM 대시보드 - FCL 해상운임 자동 견적 시스템 (Phase 1)",
+  "private": true,
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "test": "node --test tests/engine.test.js"
+  }
+}
