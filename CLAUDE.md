@@ -6,7 +6,8 @@
 ## 개요
 - 운임 Excel(CARRIER_RATE / ORIGIN_CHARGE / DEST_CHARGE / PORT_REMARK / SETTINGS / PORT) 업로드 → POL·POD·컨테이너 입력 → 선사 비교 → 비용 Breakdown → 고객용·내부용 Excel 견적서
 - 빌드 없는 순수 HTML/CSS/JavaScript. `index.html` 더블클릭 또는 GitHub Pages로 실행
-- 배포 예정: GitHub 계정 KIWOONGPKW, 저장소 `cmf-team-dashboard` → https://kiwoongpkw.github.io/cmf-team-dashboard/
+- 배포: GitHub 저장소 KIWOONGPKW/CMF-TEAM- (main 브랜치, GitHub Pages) → https://kiwoongpkw.github.io/CMF-TEAM-/
+- 개발 로드맵(6단계)은 `js/roadmap.js`에서 관리. 진행 상황이 바뀌면 status/done 값을 갱신한다
 
 ## 원칙 (반드시 지킬 것)
 - 금액은 업로드된 데이터에서만 가져온다. 운임/비용이 없거나 만료되면 금액을 만들지 말고 PENDING("확인 필요", 견적서 TBA)으로 둔다.

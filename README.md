@@ -52,7 +52,7 @@ FCL 해상운임 자동 견적 웹앱입니다. 운임 Excel 업로드 → POL/P
 
 ## 4. 화면
 
-Dashboard · New Quotation · Carrier Comparison · Cost Breakdown(포함/제외, 판매가 입력) · Quotation History(열기/복사/재다운로드) · Rate Database · Remark Management · 데이터 업로드(검증·이력·복원) · Settings
+Dashboard(개발 진행 요약 포함) · New Quotation · Carrier Comparison · Cost Breakdown(포함/제외, 판매가 입력) · Quotation History(열기/복사/재다운로드) · Rate Database · Remark Management · 데이터 업로드(검증·이력·복원) · Settings · 개발 로드맵
 
 Excel 견적서
 - **고객 제출용**: 판매가 기준, 원가·마진·출처 미노출, 미확정은 TBA, 통화별 SUMIF 합계 수식, 승인 전 "DRAFT" 표시
@@ -68,6 +68,7 @@ js/schema.js          시트 정의·업로드 검증
 js/engine.js          견적 계산 엔진 (UI와 분리)
 js/xlsx-lite.js       Excel 읽기/쓰기 (외부 라이브러리 없음)
 js/excel-builders.js  템플릿·견적서 양식
+js/roadmap.js         개발 로드맵(6단계) 진행 현황 - status/done 값만 수정
 js/store.js           브라우저 저장소 (Phase 3에서 Supabase/PostgreSQL로 교체할 부분)
 js/app.js             화면 로직
 tests/engine.test.js  계산 로직 자동화 테스트

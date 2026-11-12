@@ -164,6 +164,14 @@
       (q.length ? quoteTable(q.slice(0, 6), false) : '<div class="empty">아직 저장된 견적이 없습니다.</div>') + '</div>';
     html += '<div class="card"><h2>검토 필요 / 미확정 견적</h2>' +
       (review.length ? quoteTable(review.slice(0, 6), false) : '<div class="empty">검토가 필요한 견적이 없습니다.</div>') + '</div>';
+    if (C.ROADMAP) {
+      var R = C.ROADMAP, tp = rmTotal(R);
+      html += '<div class="card"><div class="row" style="margin-bottom:10px"><h2 class="mb0">견적 자동화 개발 진행</h2><span class="small">전체 ' + tp + '%</span><button class="btn sm right" data-act="goView" data-v="roadmap">로드맵 보기</button></div>' +
+        '<div class="grid" style="grid-template-columns:repeat(6,minmax(0,1fr));gap:10px">' + R.stages.map(function (s) {
+          var lb = RM_LABEL[s.status] || RM_LABEL.todo;
+          return '<div style="border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--head-bg)"><div class="small">' + s.no + '단계</div><div style="font-weight:600;font-size:13px;margin:2px 0 6px;min-height:34px">' + h(s.title) + '</div><span class="badge ' + lb[1] + '">' + lb[0] + '</span><div class="bar" style="margin-top:8px"><i style="width:' + rmPct(s) + '%"></i></div></div>';
+        }).join('') + '</div></div>';
+    }
     if (soon.length) {
       html += '<div class="card"><h2>만료 임박 운임 (' + warnDays + '일 이내)</h2><div class="scroll"><table class="t"><tr><th>선사</th><th>구간</th><th>TYPE</th><th class="n">O/F</th><th>만료일</th></tr>' +
         soon.slice(0, 15).map(function (r) {
@@ -338,6 +346,37 @@
     if (o.pendingCount) html += '<p class="small">※ 확인 필요 항목 ' + o.pendingCount + '건은 합계에 포함되지 않았습니다 (견적서에 TBA로 표시).</p>';
     html += '</div>';
     html += '<div class="card"><h2>견적서 비고 (고객용 Remarks에 표시)</h2><textarea data-f2="remark" placeholder="예: Booking은 Cut-off 3일 전까지 요청 바랍니다.">' + h(S.remark) + '</textarea></div>';
+    return html;
+  };
+
+
+  // ----- 개발 로드맵 -----
+  var RM_LABEL = { done: ['완료', 'b-ok'], progress: ['진행 중', 'b-info'], todo: ['예정', 'b-gray'] };
+  function rmPct(st) { var t = st.tasks.length, d = st.tasks.filter(function (x) { return x.done; }).length; return t ? Math.round(d / t * 100) : 0; }
+  function rmTotal(R) {
+    var all = [], done = 0;
+    R.stages.forEach(function (s) { s.tasks.forEach(function (t) { all.push(t); if (t.done) done++; }); });
+    return all.length ? Math.round(done / all.length * 100) : 0;
+  }
+  var VIEW_NAME = { upload: '데이터 업로드', rates: 'Rate Database', quote: 'New Quotation', history: 'Quotation History' };
+  VIEWS.roadmap = function () {
+    var R = C.ROADMAP; if (!R) return '<h1>개발 로드맵</h1>';
+    var total = rmTotal(R);
+    var html = '<h1>개발 로드맵</h1><p class="sub">' + h(R.title) + ' · ' + h(R.updated) + ' 기준</p>';
+    html += '<div class="card"><div class="row" style="align-items:flex-start;gap:24px"><div style="flex:1;min-width:280px;line-height:1.6">' + h(R.goal) + '</div>' +
+      '<div style="width:240px"><div class="small">전체 진행률</div><div style="font-size:26px;font-weight:700;margin:2px 0 6px">' + total + '%</div><div class="bar"><i style="width:' + total + '%"></i></div>' +
+      '<div class="small" style="margin-top:6px">웹페이지 구현 완료 · 실데이터 검증 단계</div></div></div></div>';
+    html += '<div class="card">';
+    R.stages.forEach(function (s) {
+      var lb = RM_LABEL[s.status] || RM_LABEL.todo, pct = rmPct(s);
+      html += '<div class="rm-stage"><div><div class="rm-no ' + h(s.status) + '">' + (s.status === 'done' ? '✓' : s.no) + '</div></div>' +
+        '<div><div class="rm-title">' + s.no + '단계. ' + h(s.title) + (s.priority ? ' <span class="badge b-warn">최우선</span>' : '') + ' <span class="badge ' + lb[1] + '">' + lb[0] + '</span></div>' +
+        '<div class="rm-desc">' + h(s.desc) + '</div><div class="rm-crit">완료 기준: ' + h(s.criteria) + '</div>' +
+        '<ul class="rm-tasks">' + s.tasks.map(function (t) { return '<li class="' + (t.done ? '' : 'todo') + '"><span class="ck">' + (t.done ? '✓' : '○') + '</span>' + h(t.text) + '</li>'; }).join('') + '</ul></div>' +
+        '<div class="rm-side"><div class="small">' + pct + '%</div><div class="bar" style="margin:4px 0 10px"><i style="width:' + pct + '%"></i></div>' +
+        (s.link ? '<button class="btn sm" data-act="goView" data-v="' + h(s.link) + '">' + h(VIEW_NAME[s.link] || s.link) + ' →</button>' : '') + '</div></div>';
+    });
+    html += '</div><div class="msg m-INFORMATION"><b>추천 개발 순서</b>' + h(R.order) + '</div>';
     return html;
   };
 
@@ -580,6 +619,7 @@
     switch (act) {
       case 'goUpload': go('upload'); break;
       case 'goQuote': go('quote'); break;
+      case 'goView': go(el.dataset.v); break;
       case 'loadSample': loadSample(); break;
       case 'newQuote': S.form = newForm(); S.result = null; S.selectedKey = null; S.current = null; S.remark = ''; go('quote'); break;
       case 'dir':
