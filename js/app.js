@@ -250,7 +250,8 @@
   // ----- Carrier Comparison -----
   function compareInner() {
     var r = S.result, req = r.request;
-    var html = '<div class="row" style="margin-bottom:8px"><h2 class="mb0">선사별 비교 - ' + h(req.direction) + ' ' + h(req.pol) + ' → ' + h(req.pod) + ' / ' + h(C.containerSummary(req)) + '</h2></div>';
+    var html = '<div class="row" style="margin-bottom:8px"><h2 class="mb0">선사별 비교 - ' + h(req.direction) + ' ' + h(req.pol) + ' → ' + h(req.pod) + ' / ' + h(C.containerSummary(req)) + '</h2>' +
+      '<button class="btn sm del right" data-act="clearResult" title="이번 산출 결과 전체 삭제 (입력값은 유지)">결과 전체 지우기</button></div>';
     (r.globalMessages || []).forEach(function (m) { html += msgBox(m); });
     if (!r.options.length) {
       if (r.expiredRates.length) html += '<div class="small">만료 요율: ' + r.expiredRates.map(function (x) { return h(x.CARRIER + ' ' + x.CONTAINER_TYPE + ' (~' + x.VALID_TO + ')'); }).join(', ') + '</div>';
@@ -270,7 +271,8 @@
         '<td class="nw">~' + h(o.rateValidTo || '-') + '</td>' +
         '<td class="small">' + (o.includedCharges.length ? '포함: ' + h(o.includedCharges.join(', ')) + '<br>' : '') + (o.excludedText ? '불포함: ' + h(o.excludedText) : '') + '</td>' +
         '<td class="n"><b>' + totalsText(o.totals) + '</b></td><td>' + optionStatus(o) + '</td>' +
-        '<td><button class="btn sm ' + (sel ? 'primary' : '') + '" data-act="selectOpt" data-key="' + h(o.key) + '">' + (sel ? '선택됨' : '선택') + '</button></td></tr>';
+        '<td><div class="row" style="flex-wrap:nowrap;gap:6px"><button class="btn sm ' + (sel ? 'primary' : '') + '" data-act="selectOpt" data-key="' + h(o.key) + '">' + (sel ? '선택됨' : '선택') + '</button>' +
+        '<button class="btn sm del" data-act="removeOpt" data-key="' + h(o.key) + '" title="이 선사의 산출 결과 삭제 (운임 DB는 그대로)">삭제</button></div></td></tr>';
     });
     html += '</table></div>';
     if (r.excluded.length) html += '<p class="small">제외된 요율: ' + r.excluded.map(function (e) { return h(e.carrier + ' ' + e.type + ' - ' + e.reason); }).join(' / ') + '</p>';
@@ -631,6 +633,18 @@
       case 'resetForm': S.form = newForm(); S.result = null; render(); break;
       case 'calc': calc(); break;
       case 'selectOpt': S.selectedKey = el.dataset.key; render(); break;
+      case 'removeOpt': {
+        var rr = S.result, idx = rr.options.map(function (o) { return o.key; }).indexOf(el.dataset.key);
+        if (idx < 0) break;
+        var gone = rr.options.splice(idx, 1)[0];
+        if (S.selectedKey === gone.key) S.selectedKey = rr.options.length ? rr.options[0].key : null;
+        render(); toast(gone.carrier + ' 산출 결과를 삭제했습니다 (운임 DB는 그대로, 다시 계산하면 나옴)'); break;
+      }
+      case 'clearResult': {
+        S.result = null; S.selectedKey = null;
+        render(); toast('산출 결과를 모두 지웠습니다'); break;
+      }
+
       case 'toBreakdown': go('breakdown'); break;
       case 'recalc':
         S.result = null; go('quote'); calc(); toast('현재 운임 DB로 다시 계산했습니다. 저장하면 같은 견적번호로 갱신됩니다.'); break;

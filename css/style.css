@@ -61,6 +61,8 @@ textarea { min-height: 90px; resize: vertical; }
 .btn.primary:hover { background: var(--navy-2); }
 .btn.green { background: var(--ok); color: #fff; border-color: var(--ok); }
 .btn.sm { padding: 4px 10px; font-size: 12.5px; }
+.btn.del { color: var(--bad); border-color: #f0c8c4; }
+.btn.del:hover { background: var(--bad-bg); }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
 .link { color: var(--accent); cursor: pointer; text-decoration: underline; background: none; border: 0; font: inherit; padding: 0; }
 table.t { width: 100%; border-collapse: collapse; font-size: 13px; }
