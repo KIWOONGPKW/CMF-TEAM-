@@ -28,7 +28,8 @@
         tasks: [
           { text: '필수값·중복·통화·유효기간 검증, 항구명/컨테이너명 정규화', done: true },
           { text: '업로드 이력 · 버전 복원', done: true },
-          { text: '실제 운임표 업로드 테스트', done: false }
+          { text: '실제 운임표 업로드 테스트', done: false },
+          { text: '웹에서 운임 한 줄씩 추가 · 수정 기능 (Rate Database 화면)', done: false }
         ],
         link: 'rates'
       },
