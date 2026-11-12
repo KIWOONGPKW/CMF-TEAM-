@@ -265,7 +265,7 @@
       var sel = o.key === S.selectedKey;
       html += '<tr class="' + (sel ? 'sel' : '') + '"><td>' + (i + 1) + '</td><td class="nw"><b>' + h(o.carrier) + '</b></td>' +
         '<td>' + h(o.routing || '-') + (o.via ? '<div class="small">via ' + h(o.via) + '</div>' : '') + '</td>' +
-        '<td class="c">' + (o.transitDays != null ? h(o.transitDays) + '일' : '-') + '</td><td>' + h(o.freeTime || '-') + '</td>' +
+        '<td class="c nw">' + (o.transitDays != null ? h(o.transitDays) + '일' : '-') + '</td><td class="nw">' + h(o.freeTime || '-') + '</td>' +
         types.map(function (t) { var rr = o.rates[t]; return '<td class="n">' + (rr ? h(rr.CURRENCY) + ' ' + fmt(rr.OCEAN_FREIGHT, rr.CURRENCY) : '<span class="badge b-bad">운임 확인 필요</span>') + '</td>'; }).join('') +
         '<td class="nw">~' + h(o.rateValidTo || '-') + '</td>' +
         '<td class="small">' + (o.includedCharges.length ? '포함: ' + h(o.includedCharges.join(', ')) + '<br>' : '') + (o.excludedText ? '불포함: ' + h(o.excludedText) : '') + '</td>' +

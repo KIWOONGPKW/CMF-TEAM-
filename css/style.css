@@ -6,9 +6,9 @@
   --side-text: #cfe0dc;    /* 왼쪽 메뉴 글자 */
   --side-muted: #8fb0aa;   /* 왼쪽 메뉴 보조 글자 */
   --bg: #e3ebe8;           /* 화면 바탕색 (차분한 세이지 그레이) */
-  --card: #fbfcfb;         /* 카드 배경 */
-  --head-bg: #eef3f1;      /* 표 머리글 / 섹션 배경 */
-  --sel-bg: #e2f0ec;       /* 선택된 행 */
+  --card: #ffffff;         /* 카드 배경 (견적 결과 등) */
+  --head-bg: #f6f8f8;      /* 표 머리글 / 섹션 배경 */
+  --sel-bg: #f3f9f7;       /* 선택된 행 */
   /* ===================================================================== */
   --ink: #1d2a2a; --muted: #5b6b69; --line: #d3dedb;
   --accent: #1f6feb; --ok: #12805c; --ok-bg: #e4f4ec; --warn: #b54708; --warn-bg: #fff4e5; --bad: #b42318; --bad-bg: #fdecea;
@@ -70,6 +70,9 @@ table.t td.n, table.t th.n { text-align: right; font-variant-numeric: tabular-nu
 table.t td.c, table.t th.c { text-align: center; }
 table.t td.nw { white-space: nowrap; }
 table.t tr.sel td { background: var(--sel-bg); }
+table.t tr.sel td:first-child { box-shadow: inset 3px 0 0 var(--brand); }
+table.t tr:hover td { background: #fafbfb; }
+table.t tr.sel:hover td { background: var(--sel-bg); }
 table.t tr.muted td { color: #98a2b3; }
 table.t tr.sec td { background: var(--head-bg); font-weight: 600; color: var(--navy); }
 .scroll { overflow-x: auto; }
